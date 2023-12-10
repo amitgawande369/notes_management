@@ -39,9 +39,12 @@ const BookSingleCard = ({ book }) => {
                     <MdOutlineDelete className='text-2xl text-red-600 hover:text-black' />
                 </Link>
             </div>
-            {showModal && (
+            {showModal ? (
                 <BookModal book={book} onClose={() => setShowModal(false)} />
-            )}
+            )
+            :
+            null}
+           
         </div>
     );
 };
