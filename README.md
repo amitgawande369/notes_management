@@ -2,7 +2,7 @@
 
 # Description:
 
-This is a simple Book Store Project built using the MERN (MongoDB, Express.js, React, and Node.js) stack. This project demonstrates basic CRUD (Create, Read, Update, Delete) operations on both the backend and frontend, including routing and CORS policy configuration.
+This is a simple Notes Management CRUD Operations Project built using the MERN (MongoDB, Express.js, React, and Node.js) stack. This project demonstrates basic CRUD (Create, Read, Update, Delete) operations on both the backend and frontend, including routing and CORS policy configuration.
 
 # Features:
 - __Backend CRUD:__ The backend of this project provides CRUD operations for managing notes. You can create, read, update, and delete notes using the API endpoints.
