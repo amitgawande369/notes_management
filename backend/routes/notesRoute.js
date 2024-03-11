@@ -1,43 +1,43 @@
 import express from 'express';
-import { Book } from '../models/bookModel.js';
+import { Note } from '../models/noteModel.js';
 
 const router = express.Router();
 
-// Route for Save a new Book
+// Route for Save a new Note
 router.post('/', async (request, response) => {
   try {
     if (
       !request.body.title ||
-      !request.body.author ||
-      !request.body.publishYear
+      !request.body.concerned_person ||
+      !request.body.concernedDate
     ) {
       return response.status(400).send({
-        message: 'Send all required fields: title, author, publishYear',
+        message: 'Send all required fields: title, concerned_person, concernedDate',
       });
     }
-    const newBook = {
+    const newNote = {
       title: request.body.title,
-      author: request.body.author,
-      publishYear: request.body.publishYear,
+      concerned_person: request.body.concerned_person,
+      concernedDate: request.body.concernedDate,
     };
 
-    const book = await Book.create(newBook);
+    const note = await Note.create(newNote);
 
-    return response.status(201).send(book);
+    return response.status(201).send(note);
   } catch (error) {
     console.log(error.message);
     response.status(500).send({ message: error.message });
   }
 });
 
-// Route for Get All Books from database
+// Route for Get All Notes from database
 router.get('/', async (request, response) => {
   try {
-    const books = await Book.find({});
+    const notes = await Note.find({});
 
     return response.status(200).json({
-      count: books.length,
-      data: books,
+      count: notes.length,
+      data: notes,
     });
   } catch (error) {
     console.log(error.message);
@@ -45,60 +45,60 @@ router.get('/', async (request, response) => {
   }
 });
 
-// Route for Get One Book from database by id
+// Route for Get One Note from database by id
 router.get('/:id', async (request, response) => {
   try {
     const { id } = request.params;
 
-    const book = await Book.findById(id);
+    const note = await Note.findById(id);
 
-    return response.status(200).json(book);
+    return response.status(200).json(note);
   } catch (error) {
     console.log(error.message);
     response.status(500).send({ message: error.message });
   }
 });
 
-// Route for Update a Book
+// Route for Update a Note
 router.put('/:id', async (request, response) => {
   try {
     if (
       !request.body.title ||
-      !request.body.author ||
-      !request.body.publishYear
+      !request.body.concerned_person ||
+      !request.body.concernedDate
     ) {
       return response.status(400).send({
-        message: 'Send all required fields: title, author, publishYear',
+        message: 'Send all required fields: title, concerned_person, concernedDate',
       });
     }
 
     const { id } = request.params;
 
-    const result = await Book.findByIdAndUpdate(id, request.body);
+    const result = await Note.findByIdAndUpdate(id, request.body);
 
     if (!result) {
-      return response.status(404).json({ message: 'Book not found' });
+      return response.status(404).json({ message: 'Note not found' });
     }
 
-    return response.status(200).send({ message: 'Book updated successfully' });
+    return response.status(200).send({ message: 'Note updated successfully' });
   } catch (error) {
     console.log(error.message);
     response.status(500).send({ message: error.message });
   }
 });
 
-// Route for Delete a book
+// Route for Delete a note
 router.delete('/:id', async (request, response) => {
   try {
     const { id } = request.params;
 
-    const result = await Book.findByIdAndDelete(id);
+    const result = await Note.findByIdAndDelete(id);
 
     if (!result) {
-      return response.status(404).json({ message: 'Book not found' });
+      return response.status(404).json({ message: 'Note not found' });
     }
 
-    return response.status(200).send({ message: 'Book deleted successfully' });
+    return response.status(200).send({ message: 'Note deleted successfully' });
   } catch (error) {
     console.log(error.message);
     response.status(500).send({ message: error.message });

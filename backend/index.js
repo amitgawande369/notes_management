@@ -1,8 +1,8 @@
 // import { PORT, mongoDBURL } from "./config.js";
 import express from 'express'
 import mongoose from "mongoose";
-import { Book } from "./models/bookModel.js";
-import router from "./routes/booksRoute.js";
+import { Note } from "./models/noteModel.js";
+import router from "./routes/notesRoute.js";
 import cors from "cors";
 import dotenv from 'dotenv';
 
@@ -19,7 +19,7 @@ app.get('/', (request, response) => {
 })
 
 app.use(cors());
-app.use('/books', router)
+app.use('/notes', router)
 
 mongoose.connect(mongoDBURL)
     .then(() => {

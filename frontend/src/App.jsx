@@ -1,10 +1,10 @@
 import React from 'react'
 import { Routes, Route } from 'react-router-dom'
-import DeleteBook from './pages/DeleteBook'
-import EditBook from './pages/EditBook'
-import ShowBook from './pages/ShowBook'
+import DeleteNote from './pages/DeleteNote'
+import EditNote from './pages/EditNote'
+import ShowNote from './pages/ShowNote'
 import Home from './pages/Home'
-import CreateBooks from './pages/CreateBooks'
+import CreateNotes from './pages/CreateNotes'
 import { SnackbarProvider } from 'notistack'
 
 
@@ -13,10 +13,10 @@ const App = () => {
     <SnackbarProvider>
     <Routes>
       <Route path='/' element={<Home />} />
-      <Route path='/books/create' element={<CreateBooks />} />
-      <Route path='/books/details/:id' element={<ShowBook />} />
-      <Route path='/books/edit/:id' element={<EditBook />} />
-      <Route path='/books/delete/:id' element={<DeleteBook />} />
+      <Route path='/notes/create' element={<CreateNotes />} />
+      <Route path='/notes/details/:id' element={<ShowNote />} />
+      <Route path='/notes/edit/:id' element={<EditNote />} />
+      <Route path='/notes/delete/:id' element={<DeleteNote />} />
     </Routes>
     </SnackbarProvider>
   )

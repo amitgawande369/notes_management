@@ -1,30 +1,46 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import BackButton from '../components/BackButton';
 import Spinner from '../components/Spinner';
 import axios from 'axios';
-import { redirect, useNavigate } from 'react-router-dom';
+import { redirect, useNavigate, useParams } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 
-const CreateBooks = () => {
+const EditNote = () => {
   const [title, setTitle] = useState('');
-  const [author, setAuthor] = useState('');
-  const [publishYear, setPublishYear] = useState('');
+  const [concerned_person, setConcerned_Person] = useState('');
+  const [concernedDate, setconcernedDate] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const {id} = useParams();
   const { enqueueSnackbar } = useSnackbar();
 
-  const handleSaveBook = () => {
+  useEffect(() => {
+    setLoading(true);
+    axios.get(`http://localhost:5555/notes/${id}`)
+    .then((response) => {
+        setConcerned_Person(response.data.concerned_person);
+        setconcernedDate(response.data.concernedDate)
+        setTitle(response.data.title)
+        setLoading(false);
+      }).catch((error) => {
+        setLoading(false);
+        alert('An error happened. Please Chack console');
+        console.log(error);
+      });
+  }, [])
+  
+  const handleEditNote = () => {
     const data = {
       title,
-      author,
-      publishYear,
+      concerned_person,
+      concernedDate,
     };
     setLoading(true);
     axios
-      .post('http://localhost:5555/books', data)
+      .put(`http://localhost:5555/notes/${id}`, data)
       .then(() => {
         setLoading(false);
-        enqueueSnackbar('Book Created successfully', { variant: 'success' });
+        enqueueSnackbar('Note Edited successfully', { variant: 'success' });
         // navigate('/');
         redirect('/')
       })
@@ -39,7 +55,7 @@ const CreateBooks = () => {
   return (
     <div className='p-4'>
       <BackButton />
-      <h1 className='text-3xl my-4'>Create Book</h1>
+      <h1 className='text-3xl my-4'>Edit Note</h1>
       {loading ? <Spinner /> : ''}
       <div className='flex flex-col border-2 border-sky-400 rounded-xl w-[600px] p-4 mx-auto'>
         <div className='my-4'>
@@ -52,29 +68,29 @@ const CreateBooks = () => {
           />
         </div>
         <div className='my-4'>
-          <label className='text-xl mr-4 text-gray-500'>Author</label>
+          <label className='text-xl mr-4 text-gray-500'>Concerned_Person</label>
           <input
             type='text'
-            value={author}
-            onChange={(e) => setAuthor(e.target.value)}
+            value={concerned_person}
+            onChange={(e) => setConcerned_Person(e.target.value)}
             className='border-2 border-gray-500 px-4 py-2  w-full '
           />
         </div>
         <div className='my-4'>
           <label className='text-xl mr-4 text-gray-500'>Publish Year</label>
           <input
-            type='number'
-            value={publishYear}
-            onChange={(e) => setPublishYear(e.target.value)}
+            type='date'
+            value={concernedDate}
+            onChange={(e) => setconcernedDate(e.target.value)}
             className='border-2 border-gray-500 px-4 py-2  w-full '
           />
         </div>
-        <button className='p-2 bg-sky-300 m-8' onClick={handleSaveBook}>
+        <button className='p-2 bg-sky-300 m-8' onClick={handleEditNote}>
           Save
         </button>
       </div>
     </div>
-  );
+  )
 }
 
-export default CreateBooks
+export default EditNote

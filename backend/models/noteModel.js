@@ -1,21 +1,21 @@
 import mongoose from "mongoose";
 
-const bookSchema  = mongoose.Schema({
+const noteSchema  = mongoose.Schema({
     title:{
         type: String,
         required: true,
     },
-    author:{
+    concerned_person:{
         type: String,
         required: true,
     },
-    publishYear:{
+    concernedDate:{
         type: String,
         required: true,
     }
 },
 {
-    timeStamps: true,
+    timestamps: true,
 })
 
-export const Book = mongoose.model('Cat', bookSchema)
+export const Note = mongoose.model('Cat', noteSchema)
